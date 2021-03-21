@@ -24,7 +24,7 @@ return [
     | 500, All failed responses return a 500 status code
     */
 
-    'error_code' => 200,
+    'error_code' => false,
 
     // Set the http status code returned when the form validation fails.
     //  When the error_code is set to 200 or 500, it will not work
