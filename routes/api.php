@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthorizationController;
+use App\Http\Controllers\API\RefreshTokenController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 // Authorization management
 Route::post('login', [AuthorizationController::class, 'store'])->middleware('guest');
+Route::post('refresh', RefreshTokenController::class);
 
 Route::middleware('auth')
     ->group(function () {

@@ -18,7 +18,9 @@ class AuthorizationController extends Controller
             Response::errorUnauthorized();
         }
 
-        return $this->respondWithToken($token);
+        $refreshToken = auth()->user()->createRefreshToken()->plainTextToken;
+
+        return $this->respondWithToken($token, $refreshToken);
     }
 
     public function show()
@@ -36,13 +38,14 @@ class AuthorizationController extends Controller
     }
 
 
-    protected function respondWithToken($token)
+    protected function respondWithToken(string $token, string $refreshToken)
     {
         return Response::success(
             [
                 'access_token' => $token,
                 'token_type' => 'bearer',
                 'expires_in' => auth()->factory()->getTTL() * 60,
+                'refresh_token' => $refreshToken,
                 'user' => UserResource::make(auth()->user())
             ],
             '',
