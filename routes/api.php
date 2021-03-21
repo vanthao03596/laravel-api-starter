@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\API\AuthorizationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Authorization management
+Route::post('login', [AuthorizationController::class, 'store'])->middleware('guest');
+
+Route::middleware('auth')
+    ->group(function () {
+        Route::get('me', [AuthorizationController::class, 'show']);
+        Route::delete('logout', [AuthorizationController::class, 'destroy']);
+    });
