@@ -2,11 +2,15 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Jiannei\Response\Laravel\Response;
+use Jiannei\Response\Laravel\Support\Traits\ExceptionTrait;
 use Throwable;
 
 class Handler extends ExceptionHandler
 {
+    use ExceptionTrait;
     /**
      * A list of the exception types that are not reported.
      *
@@ -37,5 +41,10 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        return app(Response::class)->errorUnauthorized($exception->getMessage());
     }
 }
