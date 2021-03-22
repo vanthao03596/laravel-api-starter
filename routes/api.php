@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AuthorizationController;
 use App\Http\Controllers\API\RefreshTokenController;
+use App\Http\Controllers\API\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 // Authorization management
 Route::post('login', [AuthorizationController::class, 'store'])->middleware('guest');
+Route::post('register', RegisterController::class)->middleware('guest');
 Route::post('refresh', RefreshTokenController::class);
 
 Route::middleware('auth')
