@@ -34,6 +34,8 @@ class AuthorizationControllerTest extends TestCase
                     'token_type' => 'bearer'
                 ]
             ]);
+
+        $this->assertAuthenticatedAs($this->user);
     }
 
     /** @test */
