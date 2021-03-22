@@ -12,8 +12,7 @@ use Tests\TestCase;
 
 class RegisterControllerTest extends TestCase
 {
-    /** @test */
-    public function a_user_can_register()
+    public function test_a_user_can_register()
     {
         Hash::shouldReceive('make')
             ->once()

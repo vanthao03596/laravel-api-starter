@@ -19,8 +19,7 @@ class UserTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    /** @test */
-    public function it_has_many_refresh_token()
+    public function test_it_has_many_refresh_token()
     {
         refreshToken::factory()->create(['tokenable_id' => $this->user->id]);
         $this->assertInstanceOf(MorphMany::class, $this->user->refreshTokens());
@@ -30,8 +29,7 @@ class UserTest extends TestCase
         $this->assertEquals(2, $this->user->refreshTokens()->count());
     }
 
-    /** @test */
-    public function it_can_create_refresh_token()
+    public function test_it_can_create_refresh_token()
     {
         $refreshToken = $this->user->createRefreshToken();
 

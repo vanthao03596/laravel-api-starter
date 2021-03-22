@@ -19,8 +19,7 @@ class AuthorizationControllerTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    /** @test */
-    public function a_user_can_login()
+    public function test_a_user_can_login()
     {
         $this
             ->postJson(action([AuthorizationController::class, 'store']), [
@@ -38,8 +37,7 @@ class AuthorizationControllerTest extends TestCase
         $this->assertAuthenticatedAs($this->user);
     }
 
-    /** @test */
-    public function fetch_the_current_user()
+    public function test_fetch_the_current_user()
     {
         $this->actingAs($this->user)
             ->getJson(action([AuthorizationController::class, 'show']))
@@ -51,8 +49,7 @@ class AuthorizationControllerTest extends TestCase
             ]);
     }
 
-    /** @test */
-    public function a_user_can_logout()
+    public function test_a_user_can_logout()
     {
         $token = $this->postJson(action([AuthorizationController::class, 'store']), [
             'email'    => $this->user->email,
