@@ -14,25 +14,25 @@ class AuthorizationController extends Controller
     {
         $credentials = $loginRequest->only(['email', 'password']);
 
-        if (!$token = auth()->attempt($credentials)) {
+        if (!$token = $this->guard()->attempt($credentials)) {
             Response::errorUnauthorized();
         }
 
-        $refreshToken = auth()->user()->createRefreshToken()->plainTextToken;
+        $refreshToken = $this->guard()->user()->createRefreshToken()->plainTextToken;
 
         return $this->respondWithToken($token, $refreshToken);
     }
 
     public function show()
     {
-        $user = auth()->userOrFail();
+        $user = $this->guard()->userOrFail();
 
         return Response::success(UserResource::make($user));
     }
 
     public function destroy()
     {
-        auth()->logout();
+        $this->guard()->logout();
 
         return Response::noContent();
     }
@@ -44,12 +44,17 @@ class AuthorizationController extends Controller
             [
                 'access_token' => $token,
                 'token_type' => 'bearer',
-                'expires_in' => auth()->factory()->getTTL() * 60,
+                'expires_in' => $this->guard()->factory()->getTTL() * 60,
                 'refresh_token' => $refreshToken,
-                'user' => UserResource::make(auth()->user())
+                'user' => UserResource::make($this->guard()->user())
             ],
             '',
             ResponseCodeEnum::SERVICE_LOGIN_SUCCESS
         );
+    }
+
+    protected function guard()
+    {
+        return auth();
     }
 }
