@@ -15,7 +15,7 @@ class Password implements Rule
 
     protected bool $requireSpecialCharacter = false;
 
-    protected string $message;
+    protected string $message = '';
 
     public function passes($attribute, $value): bool
     {
