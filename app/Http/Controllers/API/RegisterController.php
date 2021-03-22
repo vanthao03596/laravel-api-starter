@@ -7,6 +7,7 @@ use App\Http\Requests\API\RegisterRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Jiannei\Response\Laravel\Support\Facades\Response;
 
 class RegisterController
@@ -16,7 +17,7 @@ class RegisterController
         $user = User::create([
             'name' => $registerRequest->input('name'),
             'email' => $registerRequest->input('email'),
-            'password' => bcrypt($registerRequest->input('password')),
+            'password' => Hash::make($registerRequest->input('password')),
         ]);
 
         event(new Registered($user));
