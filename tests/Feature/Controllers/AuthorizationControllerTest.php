@@ -23,7 +23,7 @@ class AuthorizationControllerTest extends TestCase
     public function a_user_can_login()
     {
         $this
-            ->postJson(action(AuthorizationController::class.'@store'), [
+            ->postJson(action([AuthorizationController::class, 'store']), [
                 'email'    => $this->user->email,
                 'password' => 'password',
             ])
@@ -40,7 +40,7 @@ class AuthorizationControllerTest extends TestCase
     public function fetch_the_current_user()
     {
         $this->actingAs($this->user)
-            ->getJson(action(AuthorizationController::class.'@show'))
+            ->getJson(action([AuthorizationController::class, 'show']))
             ->assertSuccessful()
             ->assertJsonStructure([
                 'data' => [
@@ -64,7 +64,7 @@ class AuthorizationControllerTest extends TestCase
     /** @test */
     public function a_user_can_logout()
     {
-        $token = $this->postJson(action(AuthorizationController::class.'@store'), [
+        $token = $this->postJson(action([AuthorizationController::class, 'store']), [
             'email'    => $this->user->email,
             'password' => 'password',
         ])->json()['data']['access_token'];
@@ -72,10 +72,10 @@ class AuthorizationControllerTest extends TestCase
         $this->withHeaders([
                 'Authorization' => 'Bearer ' . $token
             ])
-            ->deleteJson(action(AuthorizationController::class.'@destroy'))
+            ->deleteJson(action([AuthorizationController::class, 'destroy']))
             ->assertSuccessful();
 
-        $this->getJson(action(AuthorizationController::class.'@show'))
+        $this->getJson(action([AuthorizationController::class, 'show']))
             ->assertStatus(401);
     }
 }
