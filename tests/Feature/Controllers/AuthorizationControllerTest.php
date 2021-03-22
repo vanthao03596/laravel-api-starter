@@ -42,22 +42,10 @@ class AuthorizationControllerTest extends TestCase
         $this->actingAs($this->user)
             ->getJson(action([AuthorizationController::class, 'show']))
             ->assertSuccessful()
-            ->assertJsonStructure([
-                'data' => [
-                    'id',
-                    'name',
-                    'email',
-                    'email_verified_at',
-                    'created_at',
-                    'updated_at'
-                ]
-            ])
-            ->assertJson([
-                'data' => [
-                    'id' => $this->user->id,
-                    'name' => $this->user->name,
-                    'email' => $this->user->email,
-                ]
+            ->assertJsonFragment([
+                'id' => $this->user->id,
+                'name' => $this->user->name,
+                'email' => $this->user->email,
             ]);
     }
 
