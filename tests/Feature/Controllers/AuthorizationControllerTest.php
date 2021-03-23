@@ -30,10 +30,10 @@ class AuthorizationControllerTest extends TestCase
             ->assertJson([
                 'status' => 'success',
                 'data' => [
-                    'token_type' => 'bearer'
+                    'token_type' => 'bearer',
                 ]
-            ]);
-
+            ])
+            ->assertCookie('refresh_token');
         $this->assertAuthenticatedAs($this->user);
     }
 
