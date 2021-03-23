@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Enums\ResponseCodeEnum;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\API\LoginRequest;
 use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Auth;
 use Jiannei\Response\Laravel\Support\Facades\Response;
 
-class AuthorizationController extends Controller
+class AuthorizationController
 {
     public function store(LoginRequest $loginRequest)
     {
@@ -50,11 +50,11 @@ class AuthorizationController extends Controller
             ],
             '',
             ResponseCodeEnum::SERVICE_LOGIN_SUCCESS
-        );
+        )->withCookie(cookie('refresh_token', $refreshToken, 24*60*7));
     }
 
     protected function guard()
     {
-        return auth();
+        return Auth::guard();
     }
 }
