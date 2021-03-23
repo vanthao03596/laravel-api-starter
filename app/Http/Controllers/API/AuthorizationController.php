@@ -14,7 +14,7 @@ class AuthorizationController
     {
         $credentials = $loginRequest->only(['email', 'password']);
 
-        if (!$token = $this->guard()->attempt($credentials)) {
+        if (! $token = $this->guard()->attempt($credentials)) {
             Response::errorUnauthorized();
         }
 
@@ -37,7 +37,6 @@ class AuthorizationController
         return Response::noContent();
     }
 
-
     protected function respondWithToken(string $token, string $refreshToken)
     {
         return Response::success(
@@ -46,11 +45,11 @@ class AuthorizationController
                 'token_type' => 'bearer',
                 'expires_in' => $this->guard()->factory()->getTTL() * 60,
                 'refresh_token' => $refreshToken,
-                'user' => UserResource::make($this->guard()->user())
+                'user' => UserResource::make($this->guard()->user()),
             ],
             '',
             ResponseCodeEnum::SERVICE_LOGIN_SUCCESS
-        )->withCookie(cookie('refresh_token', $refreshToken, 24*60*7));
+        )->withCookie(cookie('refresh_token', $refreshToken, 24 * 60 * 7));
     }
 
     protected function guard()

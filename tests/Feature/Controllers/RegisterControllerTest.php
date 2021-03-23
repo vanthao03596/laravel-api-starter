@@ -22,11 +22,11 @@ class RegisterControllerTest extends TestCase
         Event::fake();
 
         $this->postJson(action(RegisterController::class), [
-                'name' => 'Test User',
-                'email' => 'test@test.app',
-                'password' => 'password',
-                'password_confirmation' => 'password',
-            ])
+            'name' => 'Test User',
+            'email' => 'test@test.app',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ])
             ->assertSuccessful();
 
         $this->assertDatabaseHas('users', [

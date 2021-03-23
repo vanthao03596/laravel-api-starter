@@ -12,13 +12,13 @@ class RefreshTokenController
     {
         $refreshToken = request('refresh_token');
 
-        if (!$refreshToken) {
+        if (! $refreshToken) {
             Response::errorUnauthorized();
         }
 
         $token = RefreshToken::findToken($refreshToken);
 
-        if (!$token){
+        if (! $token) {
             Response::errorUnauthorized();
         }
 
@@ -26,7 +26,7 @@ class RefreshTokenController
             Response::errorUnauthorized();
         }
 
-        if (!$tokenable = $token->tokenable) {
+        if (! $tokenable = $token->tokenable) {
             Response::errorUnauthorized();
         }
 
@@ -36,7 +36,7 @@ class RefreshTokenController
             [
                 'access_token' => $token,
                 'token_type' => 'bearer',
-                'expires_in' => auth()->factory()->getTTL() * 60
+                'expires_in' => auth()->factory()->getTTL() * 60,
             ]
         );
     }
