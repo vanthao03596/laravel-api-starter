@@ -51,7 +51,6 @@ class AuthorizationControllerTest extends TestCase
 
     public function test_a_user_can_logout()
     {
-        $this->withoutExceptionHandling();
         $token = $this
             ->postJson(action([AuthorizationController::class, 'store']), [
                 'email'    => $this->user->email,
