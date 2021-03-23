@@ -31,7 +31,7 @@ class AuthorizationControllerTest extends TestCase
                 'status' => 'success',
                 'data' => [
                     'token_type' => 'bearer',
-                ]
+                ],
             ])
             ->assertCookie('refresh_token');
         $this->assertAuthenticatedAs($this->user);
@@ -59,14 +59,14 @@ class AuthorizationControllerTest extends TestCase
 
         $this
             ->withHeaders([
-                'Authorization' => 'Bearer ' . $token
+                'Authorization' => 'Bearer '.$token,
             ])
             ->deleteJson(action([AuthorizationController::class, 'destroy']))
             ->assertSuccessful();
 
         $this
             ->withHeaders([
-                'Authorization' => 'Bearer ' . $token
+                'Authorization' => 'Bearer '.$token,
             ])->getJson(action([AuthorizationController::class, 'show']))
             ->assertStatus(401);
     }

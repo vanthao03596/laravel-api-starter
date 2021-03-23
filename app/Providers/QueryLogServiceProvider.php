@@ -9,20 +9,19 @@ use Illuminate\Support\ServiceProvider;
 
 class QueryLogServiceProvider extends ServiceProvider
 {
-
     public function register()
     {
     }
 
     public function boot()
     {
-        if (!$this->app['config']->get('logging.query.enabled', false)) {
+        if (! $this->app['config']->get('logging.query.enabled', false)) {
             return;
         }
 
         $trigger = $this->app['config']->get('logging.query.trigger');
 
-        if (!empty($trigger) && !$this->requestHasTrigger($trigger)) {
+        if (! empty($trigger) && ! $this->requestHasTrigger($trigger)) {
             return;
         }
 
@@ -61,5 +60,4 @@ class QueryLogServiceProvider extends ServiceProvider
 
         return round($seconds, 2).'s';
     }
-
 }
