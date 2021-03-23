@@ -51,18 +51,23 @@ class AuthorizationControllerTest extends TestCase
 
     public function test_a_user_can_logout()
     {
-        $token = $this->postJson(action([AuthorizationController::class, 'store']), [
-            'email'    => $this->user->email,
-            'password' => 'password',
-        ])->json()['data']['access_token'];
+        $token = $this
+            ->postJson(action([AuthorizationController::class, 'store']), [
+                'email'    => $this->user->email,
+                'password' => 'password',
+            ])->json()['data']['access_token'];
 
-        $this->withHeaders([
+        $this
+            ->withHeaders([
                 'Authorization' => 'Bearer ' . $token
             ])
             ->deleteJson(action([AuthorizationController::class, 'destroy']))
             ->assertSuccessful();
 
-        $this->getJson(action([AuthorizationController::class, 'show']))
+        $this
+            ->withHeaders([
+                'Authorization' => 'Bearer ' . $token
+            ])->getJson(action([AuthorizationController::class, 'show']))
             ->assertStatus(401);
     }
 }
