@@ -24,7 +24,7 @@ class RefreshTokenControllerTest extends TestCase
     public function test_throw_exception_if_not_provide()
     {
         $this
-            ->postJson(action(RefreshTokenController::class),)
+            ->postJson(action(RefreshTokenController::class), )
             ->assertStatus(401);
     }
 
@@ -39,7 +39,7 @@ class RefreshTokenControllerTest extends TestCase
             ->assertStatus(401);
 
         $expiredToken = RefreshToken::factory()->expired()->create([
-            'token' => hash('sha256', $plainTextToken = Str::random(40))
+            'token' => hash('sha256', $plainTextToken = Str::random(40)),
         ]);
 
         $plainExpiredTextToken = $expiredToken->getKey().'|'.$plainTextToken;
@@ -74,5 +74,4 @@ class RefreshTokenControllerTest extends TestCase
             ->postJson(action(RefreshTokenController::class))
             ->assertSuccessful();
     }
-
 }
